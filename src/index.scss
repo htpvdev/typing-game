@@ -9,7 +9,7 @@ body {
   background-color: #f4f4f4;
 }
 
-#gameArea, #genreSelection {
+#gameArea, #stageSelect {
   border: 2px solid #333;
   padding: 40px;
   background-color: #fff;
@@ -22,8 +22,8 @@ body {
   display: none;  /* ゲームエリアは初めは非表示 */
 }
 
-#genreSelection button:not(:last-child) {
-  margin-bottom: 10px;  /* ジャンル選択のボタンの間隔を調整 */
+#stageSelect button:not(:last-child) {
+  margin-bottom: 10px;  /* ステージ選択のボタンの間隔を調整 */
 }
 
 #targetWord {
@@ -58,3 +58,11 @@ button {
 #msg {
   height: 30px;
 }
+
+//#region JavaScriptで操作するためのクラス
+
+.hidden {
+  display: none;
+}
+
+//#endregion JavaScriptで操作するためのクラス

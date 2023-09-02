@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タイピングゲーム</title>
+</head>
+
+<body>
+    <!-- <audio id="errorSound" src="path_to_your_audio_file/error.mp3" preload="auto"></audio> -->
+
+    <div id="genreSelection">
+        <button id="iphoneGenreBtn">通信</button>
+        <button id="programGenreBtn">プログラミング</button>
+    </div>
+
+    <div id="gameArea">
+        <div id="countdown">3</div>
+        <div id="questionView"></div>
+        <div id="furiganaText"></div>
+        <div id="inputKeyView"></div>
+        <input type="text" id="userInput">
+        <div id="msg"></div>
+    </div>
+
+    <div>
+        <div id="resultView"></div>
+        <button id="restartBtn">再スタート</button>
+    </div>
+
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

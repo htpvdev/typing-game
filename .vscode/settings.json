@@ -1,7 +1,10 @@
 {
-  "cSpell.words": [
-    "furigana",
-    "romaji",
-  ],
-  "liveServer.settings.root": "/dist",
+  "cSpell.words": ["furigana", "romaji"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "eslint.validate": ["json", "javascript", "typescript"],
+  "liveServer.settings.root": "/dist"
 }

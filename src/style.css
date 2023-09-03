@@ -96,7 +96,6 @@ button:focus-visible {
   }
 }
 
-
 body {
   font-family: 'Arial', sans-serif;
   display: flex;
@@ -108,7 +107,8 @@ body {
   background-color: #f4f4f4;
 }
 
-#gameArea, #genreSelection {
+#gameArea,
+#stageSelect {
   border: 2px solid #333;
   padding: 40px;
   background-color: #fff;
@@ -118,11 +118,11 @@ body {
 }
 
 #gameArea {
-  display: none;  /* ゲームエリアは初めは非表示 */
+  display: none; /* ゲームエリアは初めは非表示 */
 }
 
-#genreSelection button:not(:last-child) {
-  margin-bottom: 10px;  /* ジャンル選択のボタンの間隔を調整 */
+#stageSelect button:not(:last-child) {
+  margin-bottom: 10px; /* ジャンル選択のボタンの間隔を調整 */
 }
 
 #targetWord {

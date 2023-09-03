@@ -3,6 +3,7 @@
   "scripts": {
     "dev": "vite --port 3000",
     "build": "tsc && vite build",
+    "buildHp": "tsc && vite build --base https://htpvdev.github.io/contents/typing-game",
     "preview": "vite preview"
   },
   "devDependencies": {

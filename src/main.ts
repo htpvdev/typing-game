@@ -161,7 +161,7 @@ const restartGame = () => {
   newContent = ''
 }
 
-_.forEach(stages, (stageName, stage) => {
+_.forEach(stages, (_stageName, stage) => {
   document
     .querySelector<HTMLButtonElement>(`#${stage}StageBtn`)
     ?.addEventListener('click', () => startGame(stage as Stages))

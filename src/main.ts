@@ -8,13 +8,24 @@ import {
   Stages,
   stages,
 } from './config/questions'
-import { returnInputText, setHtml, setStyle, setText, setValue } from './method'
+import {
+  createFirstInputText,
+  setHtml,
+  setStyle,
+  setText,
+  setValue,
+} from './method'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <!-- <audio id="errorSound" src="path_to_your_audio_file/error.mp3" preload="auto"></audio> -->
+    <div id="dashboard">
+      <h1 id="mainText">タイピングゲーム</h1>
+      <p id="subText">残り時間: <span id="time">--</span> スコア: <span id="score">--</span></p>
+    </div>
 
     <div id="stageSelect">
+      <h2>ステージを選択</h2>
       ${_.map(stages, (stageName, stage) => {
         return `<button id="${stage}StageBtn">${stageName}</button>`
       }).join('')}
@@ -22,33 +33,25 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
     <div id="gameArea">
       <div id="countdown"><p>3</p></div>
-      <div id="questionView"><p>...</p></div>
-      <!-- <div id="furiganaView"><p>...</p></div> -->
-      <div id="inputKeyView"><p>...</p></div>
+      <div id="questionView"><p> </p></div>
+      <div id="furiganaView"><p> </p></div>
+      <div id="inputKeyView"><p> </p></div>
       <input type="text" id="userInput">
-      <div id="msg"><p>...</p></div>
     </div>
 
     <div>
-      <div id="resultView"><p>...</p></div>
+      <div id="resultView"><p> </p></div>
       <button id="restartBtn">再スタート</button>
     </div>
   </div>
 `
 
-// setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
-
-const msg = [
-  '焦らず頑張って！',
-  '基礎ができていませんね',
-  'どうしてこれができないんですか？',
-  'まずは何ができないのか最初に言ってください。',
-]
-
 const questionViewEl = document
   .querySelector<HTMLDivElement>('#questionView')
   ?.querySelector('p')
-// const furiganaViewEl = document.querySelector<HTMLDivElement>('#furiganaView');
+const furiganaViewEl = document
+  .querySelector<HTMLDivElement>('#furiganaView')
+  ?.querySelector('p')
 const inputKeyViewEl = document
   .querySelector<HTMLDivElement>('#inputKeyView')
   ?.querySelector('p')
@@ -61,7 +64,6 @@ const countdownEl = document
   ?.querySelector('p')
 const gameAreaEl = document.querySelector<HTMLDivElement>('#gameArea')
 const stageSelectEl = document.querySelector<HTMLDivElement>('#stageSelect')
-const msgEl = document.querySelector<HTMLDivElement>('#msg')?.querySelector('p')
 // const errorSound = document.querySelector<>('#errorSound');
 
 let setQuestions: Question[] = []
@@ -78,27 +80,22 @@ let newContent = ''
 let remainingTarget = ''
 
 // 最初に表示しない要素を隠す
-if (gameAreaEl?.style) {
-  gameAreaEl.style.visibility = 'none'
-}
+setStyle(gameAreaEl, 'none')
 
-const changeWord = () => {
-  if (currentQuestion < setQuestions.length) {
-    // 修正：問題数に基づく条件判定
-    setText(questionViewEl, setQuestions[currentQuestion].questionText)
-    // setHtml(furiganaViewEl, setQuestions[currentQuestion].furigana)
-    setHtml(
-      inputKeyViewEl,
-      returnInputText(setQuestions[currentQuestion].furigana),
-    )
-    currentQuestion++
-  } else {
-    setStyle(gameAreaEl, 'none')
-    setHtml(
-      resultViewEl,
-      `単語数: ${correctCount} / ${setQuestions.length}<br>間違えた文字数: ${wrongCharCount}`,
-    )
-  }
+const startGame = (stage: Stages) => {
+  setQuestions = questionDictionary[stage]
+    .sort(() => Math.random() - 0.5)
+    .slice(0, 5)
+  currentQuestion = 0
+  correctCount = 0
+  setText(questionViewEl, ' ')
+  setText(furiganaViewEl, ' ')
+  setText(inputKeyViewEl, ' ')
+  setText(resultViewEl, ' ')
+  setStyle(stageSelectEl, 'none')
+  setStyle(gameAreaEl, 'flex')
+
+  startCountdown(changeWord)
 }
 
 const startCountdown = (callback: () => void) => {
@@ -117,26 +114,23 @@ const startCountdown = (callback: () => void) => {
   }, 1000)
 }
 
-const startGame = (stage: Stages) => {
-  setQuestions = questionDictionary[stage]
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 5)
-  currentQuestion = 0
-  correctCount = 0
-  setText(questionViewEl, ' ')
-  setText(inputKeyViewEl, ' ')
-  setText(resultViewEl, ' ')
-  setStyle(stageSelectEl, 'none')
-  setStyle(gameAreaEl, 'flex')
-
-  startCountdown(changeWord)
-}
-
-const randomMsg = (wrongCharCount: number) => {
-  if (msg.length < wrongCharCount) {
-    return 'しんじゃえ(*´∀｀) [笑]'
+const changeWord = () => {
+  if (currentQuestion < setQuestions.length) {
+    // 修正：問題数に基づく条件判定
+    setText(questionViewEl, setQuestions[currentQuestion].questionText)
+    setText(furiganaViewEl, setQuestions[currentQuestion].furigana)
+    setHtml(
+      inputKeyViewEl,
+      createFirstInputText(setQuestions[currentQuestion].furigana),
+    )
+    currentQuestion++
+  } else {
+    setStyle(gameAreaEl, 'none')
+    setHtml(
+      resultViewEl,
+      `単語数: ${correctCount} / ${setQuestions.length}<br>間違えた文字数: ${wrongCharCount}`,
+    )
   }
-  return msg[wrongCharCount - 1]
 }
 
 const restartGame = () => {
@@ -149,6 +143,7 @@ const restartGame = () => {
   setText(userInputEl, '')
   setHtml(inputKeyViewEl, ' ')
   setText(questionViewEl, ' ')
+  setText(furiganaViewEl, ' ')
   setHtml(resultViewEl, ' ')
 
   wrongCharCount = 0
@@ -172,7 +167,8 @@ document
   ?.addEventListener('click', restartGame)
 
 userInputEl?.addEventListener('keydown', (e) => {
-  const targetQuestion = returnInputText(
+  console.log(e.key)
+  const targetQuestion = createFirstInputText(
     setQuestions[currentQuestion - 1].furigana,
   )
   if (inputExist) {
@@ -189,15 +185,9 @@ userInputEl?.addEventListener('keydown', (e) => {
     remainingTarget = currentTarget.slice(1)
     newContent = redContent + remainingTarget
     setHtml(inputKeyViewEl, newContent)
-    setHtml(msgEl, ' ')
   } else {
     wrongCharCount++
     e.preventDefault()
-
-    setHtml(
-      msgEl,
-      `<span style="color: red">${randomMsg(wrongCharCount)}</span>`,
-    )
 
     setHtml(inputKeyViewEl, inputExist ? newContent : targetQuestion)
   }

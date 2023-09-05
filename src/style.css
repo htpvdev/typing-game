@@ -1,99 +1,5 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #3178c6aa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+html {
+  font-size: 24px; /* これが1remになる */
 }
 
 body {
@@ -103,8 +9,7 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-size: 24px;
-  background-color: #f4f4f4;
+  background-color: antiquewhite;
 }
 
 #gameArea,
@@ -117,24 +22,53 @@ body {
   align-items: center;
 }
 
-#gameArea {
-  display: none; /* ゲームエリアは初めは非表示 */
+#dashboard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+
+#mainText {
+  font-size: 1.5rem;
+  margin-right: 2rem;
+}
+
+#subText {
+  font-size: 1.5rem;
+  margin-left: auto;
 }
 
 #stageSelect button:not(:last-child) {
   margin-bottom: 10px; /* ジャンル選択のボタンの間隔を調整 */
 }
 
-#targetWord {
-  margin-bottom: 20px;
-  font-size: 28px;
+#questionView > p {
+  font-size: 2rem;
+  max-width: 85%;
+  margin: auto;
+}
+
+#furiganaView > p {
+  font-size: 0.8rem;
+  color: darkgrey;
+  max-width: 100%;
+  margin: 1rem auto auto auto;
+}
+
+#inputKeyView {
+  margin-bottom: 0.8px;
+  font-size: 1.5rem;
+  overflow-wrap: break-word; /* ローマ字が長いときに改行する */
+  max-width: 85%;
 }
 
 #userInput {
   padding: 10px 15px;
   font-size: 24px;
   width: 100%;
-  max-width: 400px;
+  max-width: 85%;
 }
 
 #countdown {
@@ -152,8 +86,4 @@ button {
   font-size: 24px;
   margin-top: 10px;
   cursor: pointer;
-}
-
-#msg {
-  height: 30px;
 }

@@ -30,7 +30,7 @@ export const setValue = (el: HTMLInputElement | null, value: string) => {
   }
 }
 
-export const returnInputText = (furigana: string) => {
+export const createFirstInputText = (furigana: string) => {
   const wordList: string[] = []
   let skipFlag = false
   furigana.split('').map((word, index) => {

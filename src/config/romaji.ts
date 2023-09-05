@@ -104,7 +104,7 @@ const romaji = {
   クュ: ['qyu'],
   クョ: ['qyo'],
   シャ: ['sya', 'sha'],
-  シィ: 'syi',
+  シィ: ['syi'],
   シュ: ['syu', 'shu'],
   シェ: ['sye', 'she'],
   ショ: ['syo', 'sho'],
